@@ -1,0 +1,130 @@
+{
+  "name": "CosquinRock Mock API",
+  "port": 3000,
+  "routes": [
+    {
+      "method": "GET",
+      "endpoint": "/api/events",
+      "responses": [
+        {
+          "code": 200,
+          "body": {
+            "success": true,
+            "data": [
+              {
+                "id": "mock-1",
+                "title": "Reunión de equipo",
+                "description": "Reunión semanal de planificación",
+                "startDate": "2026-02-14T18:00:00-03:00",
+                "endDate": "2026-02-15T02:00:00-03:00",
+                "color": "#3788d8",
+                "allDay": false,
+                "location": "Sala A",
+                "attendees": ["alice@example.com", "bob@example.com"],
+                "status": "confirmed",
+                "createdAt": "2026-02-01T12:00:00Z",
+                "updatedAt": "2026-02-01T12:00:00Z"
+              },
+              {
+                "id": "mock-2",
+                "title": "Llamada con clientes",
+                "description": "Revisión de requisitos",
+                "startDate": "2026-02-15T18:00:00-03:00",
+                "endDate": "2026-02-16T02:00:00-03:00",
+                "color": "#ff7f50",
+                "allDay": false,
+                "location": "Meeting Room 2",
+                "attendees": ["carla@example.com"],
+                "status": "tentative",
+                "createdAt": "2026-02-01T13:00:00Z",
+                "updatedAt": "2026-02-01T13:00:00Z"
+              }
+            ],
+            "timestamp": "2026-02-04T12:00:00Z"
+          },
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/events",
+      "responses": [
+        {
+          "code": 200,
+          "body": {
+            "success": true,
+            "data": {
+              "id": "mock-3",
+              "title": "Nueva reunión de prueba",
+              "description": "Evento creado desde Mockoon",
+              "startDate": "2026-02-16T18:00:00-03:00",
+              "endDate": "2026-02-17T02:00:00-03:00",
+              "color": "#6a5acd",
+              "allDay": false,
+              "location": "Sala B",
+              "attendees": ["nuevo@example.com"],
+              "status": "confirmed",
+              "createdAt": "2026-02-04T12:04:00Z",
+              "updatedAt": "2026-02-04T12:04:00Z"
+            },
+            "timestamp": "2026-02-04T12:04:00Z"
+          },
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "endpoint": "/api/events/:id",
+      "responses": [
+        {
+          "code": 200,
+          "body": {
+            "success": true,
+            "data": {
+              "id": "mock-1",
+              "title": "Reunión de equipo - actualizada",
+              "description": "Revisión de agenda",
+              "startDate": "2026-02-14T19:00:00-03:00",
+              "endDate": "2026-02-15T03:00:00-03:00",
+              "color": "#3788d8",
+              "allDay": false,
+              "location": "Sala A",
+              "attendees": ["alice@example.com","bob@example.com"],
+              "status": "confirmed",
+              "createdAt": "2026-02-01T12:00:00Z",
+              "updatedAt": "2026-02-04T12:05:00Z"
+            },
+            "timestamp": "2026-02-04T12:05:00Z"
+          },
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "endpoint": "/api/events/:id",
+      "responses": [
+        {
+          "code": 200,
+          "body": {
+            "success": true,
+            "message": "Deleted",
+            "timestamp": "2026-02-04T12:06:00Z"
+          },
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" }
+          ]
+        }
+      ]
+    }
+  ],
+  "cors": true
+}

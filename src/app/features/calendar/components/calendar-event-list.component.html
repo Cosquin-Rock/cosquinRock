@@ -1,0 +1,169 @@
+<div class="event-list-container">
+  <div class="list-header">
+    <h2>Eventos</h2>
+    <button (click)="loadEvents()" class="btn-refresh" [disabled]="isLoading">
+      {{ isLoading ? 'Cargando...' : 'Actualizar' }}
+    </button>
+  </div>
+
+  <!-- Mensajes de estado -->
+  <div class="message-container">
+    <div *ngIf="successMessage" class="success-message">
+      ✓ {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      ✗ {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Lista de eventos -->
+  <div class="events-table">
+    <div *ngIf="events.length === 0" class="no-events">
+      <p>No hay eventos programados</p>
+    </div>
+
+    <div *ngIf="events.length > 0" class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let event of events">
+            <tr [class.editing]="isEditing[event.id]">
+              <td>
+                <div
+                  class="event-title"
+                  [style]="getEventColor(event)"
+                  [ngStyle]="{ paddingLeft: '10px', borderRadius: '4px' }"
+                >
+                  <input
+                    *ngIf="isEditing[event.id]"
+                    [(ngModel)]="event.title"
+                    class="edit-input"
+                    type="text"
+                  />
+                  <span *ngIf="!isEditing[event.id]">{{ event.title }}</span>
+                </div>
+              </td>
+              <td>
+                <span *ngIf="!isEditing[event.id]">
+                  {{ formatDate(event.start) }}
+                </span>
+                <input
+                  *ngIf="isEditing[event.id]"
+                  [(ngModel)]="event.start"
+                  class="edit-input"
+                  type="datetime-local"
+                />
+              </td>
+              <td>
+                <span *ngIf="!isEditing[event.id]">
+                  {{ formatDate(event.end) }}
+                </span>
+                <input
+                  *ngIf="isEditing[event.id]"
+                  [(ngModel)]="event.end"
+                  class="edit-input"
+                  type="datetime-local"
+                />
+              </td>
+              <td>
+                <span *ngIf="!isEditing[event.id]">
+                  {{ getEventLocation(event) }}
+                </span>
+                <input
+                  *ngIf="isEditing[event.id]"
+                  [ngModel]="getEventLocation(event)"
+                  (ngModelChange)="onLocationChange(event, $event)"
+                  class="edit-input"
+                  type="text"
+                />
+              </td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class]="(event.extendedProps?.['status'] || 'confirmed') | lowercase"
+                >
+                  {{ getEventStatus(event) }}
+                </span>
+              </td>
+              <td class="actions">
+                <button
+                  *ngIf="!isEditing[event.id]"
+                  (click)="toggleEdit(event.id)"
+                  class="btn-edit"
+                  title="Editar"
+                >
+                  ✏️
+                </button>
+                <button
+                  *ngIf="isEditing[event.id]"
+                  (click)="saveEvent(event)"
+                  class="btn-save"
+                  title="Guardar"
+                >
+                  💾
+                </button>
+                <button
+                  *ngIf="isEditing[event.id]"
+                  (click)="toggleEdit(event.id)"
+                  class="btn-cancel"
+                  title="Cancelar"
+                >
+                  ✕
+                </button>
+                <button
+                  (click)="deleteEvent(event.id)"
+                  class="btn-delete"
+                  title="Eliminar"
+                >
+                  🗑️
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="isEditing[event.id]" class="details-row">
+              <td colspan="6">
+                <div class="event-details">
+                  <div class="detail-field">
+                    <label>Descripción:</label>
+                    <textarea
+                      [ngModel]="event.extendedProps?.['description'] || ''"
+                      (ngModelChange)="onDescriptionChange(event, $event)"
+                      class="edit-input"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                  <div class="detail-field">
+                    <label>Color:</label>
+                    <input
+                      [ngModel]="event.backgroundColor || '#3788d8'"
+                      (ngModelChange)="onColorChange(event, $event)"
+                      class="edit-input"
+                      type="color"
+                    />
+                  </div>
+                  <div class="detail-field">
+                    <label>Todo el día:</label>
+                    <input
+                      [checked]="event.allDay || false"
+                      (change)="event.allDay = !event.allDay"
+                      class="edit-input"
+                      type="checkbox"
+                    />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

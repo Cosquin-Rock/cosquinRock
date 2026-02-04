@@ -1,0 +1,39 @@
+.dashboard {
+  padding: 1rem;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.calendar-pane {
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.list-pane {
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+.dashboard-center {
+  display: flex;
+  justify-content: center;
+ align-items: flex-start;
+  width: 100%;
+  padding: 16px 0;
+}

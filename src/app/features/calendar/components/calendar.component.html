@@ -1,0 +1,12 @@
+<div class="calendar-container two-calendar-layout">
+  <div class="calendar-two" *ngIf="pluginsLoadedLeft() && pluginsLoadedRight()">
+    <div class="calendar-cell calendar-day14">
+      <div class="calendar-day-label">14</div>
+      <full-calendar [options]="calendarOptionsLeft()"></full-calendar>
+    </div>
+    <div class="calendar-cell calendar-day15">
+      <div class="calendar-day-label">15</div>
+      <full-calendar [options]="calendarOptionsRight()"></full-calendar>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+{
+  "uuid": "22839f9d-4f45-461b-b74f-7ff15b872093",
+  "lastMigration": 33,
+  "name": "Walla",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "0d33d032-59f4-404c-b497-db0210267ac5",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/events",
+      "responses": [
+        {
+          "uuid": "bf60d1c0-2aa1-49bf-85f9-663297817e70",
+          "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": \"mock-1\",\n      \"title\": \"Reunión de equipo\",\n      \"description\": \"Reunión semanal de planificación\",\n      \"startDate\": \"2026-02-14T18:00:00Z\",\n      \"endDate\": \"2026-02-14T19:00:00Z\",\n      \"color\": \"#3788d8\",\n      \"allDay\": false,\n      \"location\": \"Sala A\",\n      \"attendees\": [\n        \"alice@example.com\",\n        \"bob@example.com\"\n      ],\n      \"status\": \"confirmed\",\n      \"createdAt\": \"2026-02-01T12:00:00Z\",\n      \"updatedAt\": \"2026-02-01T12:00:00Z\"\n    },\n    {\n      \"id\": \"mock-2\",\n      \"title\": \"Llamada con clientes\",\n      \"description\": \"Revisión de requisitos\",\n      \"startDate\": \"2026-02-15T01:00:00Z\",\n      \"endDate\": \"2026-02-14T02:15:00Z\",\n      \"color\": \"#ff7f50\",\n      \"allDay\": false,\n      \"location\": \"Meeting Room 2\",\n      \"attendees\": [\n        \"carla@example.com\"\n      ],\n      \"status\": \"tentative\",\n      \"createdAt\": \"2026-02-01T13:00:00Z\",\n      \"updatedAt\": \"2026-02-01T13:00:00Z\"\n    }\n  ],\n  \"timestamp\": \"2026-02-04T12:00:00Z\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "0d33d032-59f4-404c-b497-db0210267ac5"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}
