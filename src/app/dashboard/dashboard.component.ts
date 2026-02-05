@@ -2,14 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CalendarViewService } from '../services/calendar-view.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CalendarComponent, CalendarEventListComponent } from '../features/calendar';
+import { CalendarComponent } from '../features/calendar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, CalendarComponent, CalendarEventListComponent],
+  imports: [CommonModule, RouterModule, CalendarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

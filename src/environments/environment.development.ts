@@ -1,8 +1,10 @@
 /**
- * Configuración de entorno para desarrollo.
- * Este archivo se usa cuando se ejecuta `ng serve` o `ng build --configuration development`.
+ * Configuración de entorno para producción.
+ * Este archivo reemplaza environment.development.ts cuando se ejecuta `ng build --configuration production`.
+ * Actualizar la baseUrl con la URL del servidor de producción.
  */
 export const environment = {
-  production: false,
-  baseUrl: 'http://localhost:3000',
+  production: true,
+  baseUrl: 'https://ms-bands.onrender.com', // TODO: Reemplazar con la URL de producción
+  // baseUrl: 'http://localhost:3000', 
 };
