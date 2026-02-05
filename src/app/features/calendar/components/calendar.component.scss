@@ -1,13 +1,43 @@
 .calendar-container {
   display: block;
   margin: 0 auto;
+  text-align: center;
 }
 .calendar-day-label {
   font-family: 'Psychedelic One', cursive;
   font-size: clamp(48px, 8vw, 120px);
   color: #fff;
-  text-align: left;
-  margin: 0 0 8px 0;
-  padding-left: 8px;
+  text-align: center;
+  margin: 0 0 0 0;
   text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 20px rgba(0,0,0,.2);
+}
+
+.calendar-day-button {
+  background: #fff;
+  color: #690571;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  display: block;
+  margin: 16px auto;
+  font-size: 1em;
+  transition: filter 0.2s ease;
+}
+
+.calendar-day-button:hover {
+  filter: brightness(0.95);
+}
+
+// Ocultar el encabezado del día (donde aparece "Saturday", "Sunday", etc.)
+::ng-deep .fc-col-header-cell,
+::ng-deep .fc-day-header {
+  display: none !important;
+}
+
+// Ocultar la fila "all-day" (por si acaso)
+::ng-deep .fc-all-day {
+  display: none !important;
 }

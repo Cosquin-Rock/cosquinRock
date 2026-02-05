@@ -1,14 +1,11 @@
 <div class="dashboard">
   <header class="dashboard-header">
-    <span class="dashboard-header-title">Dashboard</span>
     <nav class="dashboard-nav">
-      <a routerLink="/clientSelect">Select Bands</a>
-      <a routerLink="/">Calendar</a>
+      <a routerLink="/clientSelect" class="nav-button">Seleccionar bandas</a>
+      <a routerLink="/" class="nav-button">Calendar</a>
     </nav>
+    <button (click)="toggleDay()" class="nav-button" [title]="getButtonText()">{{ getButtonText() }}</button>
   </header>
-  <div class="dashboard-header-actions" style="position: absolute; top: 8px; right: 16px; z-index: 2;">
-    <button (click)="toggleDay()" class="btn-cta" title="Mostrar Dia 15">Dia 15</button>
-  </div>
   <div class="dashboard-center">
     <app-calendar></app-calendar>
   </div>

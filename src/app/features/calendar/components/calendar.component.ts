@@ -51,6 +51,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       slotDuration: '00:30:00',
       nowIndicator: true,
       height: 'auto',
+      allDaySlot: false, // Ocultar la fila "all-day"
       plugins,
       eventContent: this.getEventContentLeft.bind(this)
     } as CalendarOptions;
@@ -71,6 +72,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       slotDuration: '00:30:00',
       nowIndicator: true,
       height: 'auto',
+      allDaySlot: false, // Ocultar la fila "all-day"
       plugins,
       eventContent: this.getEventContentRight.bind(this)
     } as CalendarOptions;
