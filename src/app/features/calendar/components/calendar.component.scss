@@ -4,6 +4,75 @@
   max-width: 100%;
 }
 
+.calendar-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #2a2a2a;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-back {
+  background: #690571;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  &:hover {
+    background: #8a0794;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.day-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-day {
+  background: #383838;
+  color: #fff;
+  border: 2px solid #555;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    background: #4a4a4a;
+    border-color: #777;
+  }
+
+  &.active {
+    background: #fff;
+    color: #690571;
+    border-color: #fff;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
 .calendar-container {
   display: block;
   margin: 0 auto;
@@ -117,6 +186,7 @@
 
 ::ng-deep .fc-event-main {
   color: #fff !important;
+  letter-spacing: 0.03em !important;
 }
 
 // Fallback teal si el evento no trae color; el backgroundColor del evento se respeta desde el modelo
@@ -132,4 +202,29 @@
 
 ::ng-deep .fc-scrollgrid-sync-table {
   background: #1a1a1a;
+}
+
+// Responsive para botones de navegación
+@media (max-width: 768px) {
+  .calendar-navigation {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-back {
+    width: 100%;
+    text-align: center;
+  }
+
+  .day-buttons {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .btn-day {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
 }

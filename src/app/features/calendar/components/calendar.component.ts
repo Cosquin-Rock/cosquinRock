@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,7 +15,7 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, FullCalendarModule],
+  imports: [CommonModule, FullCalendarModule, RouterModule],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
@@ -41,6 +42,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   constructor(
     private calendarEventService: CalendarEventService,
     private calendarViewService: CalendarViewService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -189,4 +191,27 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   getEventContentRight = this.getEventContentLeft;
+
+  /**
+   * Cambia al día 14
+   */
+  goToDay14(): void {
+    this.currentDay = 14;
+    this.calendarViewService.showDay14();
+  }
+
+  /**
+   * Cambia al día 15
+   */
+  goToDay15(): void {
+    this.currentDay = 15;
+    this.calendarViewService.showDay15();
+  }
+
+  /**
+   * Navega de regreso a la selección de bandas
+   */
+  goToClientSelect(): void {
+    this.router.navigate(['/clientSelect']);
+  }
 }

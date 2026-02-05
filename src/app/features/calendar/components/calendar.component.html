@@ -1,4 +1,25 @@
 <div class="calendar-wrapper">
+  <!-- Botones de navegación -->
+  <div class="calendar-navigation">
+    <button class="btn-back" (click)="goToClientSelect()">
+      ← Volver a Selección
+    </button>
+    <div class="day-buttons">
+      <button 
+        class="btn-day" 
+        [class.active]="currentDay === 14" 
+        (click)="goToDay14()">
+        Día 14
+      </button>
+      <button 
+        class="btn-day" 
+        [class.active]="currentDay === 15" 
+        (click)="goToDay15()">
+        Día 15
+      </button>
+    </div>
+  </div>
+
   <div class="calendar-container" *ngIf="currentDay === 14">
     <div class="calendar-day-bar">
       <span class="calendar-day-bar__label">Cosquin rock</span>

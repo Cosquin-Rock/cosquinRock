@@ -93,8 +93,8 @@ export class ClientSelectComponent implements OnInit {
     const payload = { bands: selectedBands.map(b => ({ ...b })), person: '' };
     this.selectionService.saveBands(payload).subscribe(
       (res) => {
-
-        this.router.navigate(['/']);
+        // Navegar al calendario después de guardar la selección
+        this.router.navigate(['/calendar']);
       },
       (err) => {
         console.error('Error saving bands:', err);

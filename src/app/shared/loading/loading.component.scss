@@ -12,25 +12,16 @@
   backdrop-filter: blur(2px);
 }
 
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  min-width: 200px;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.loading-text {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 900;
+  color: #808080;
+  text-align: center;
+  letter-spacing: 0.1em;
+  animation: spin 2s linear infinite;
+  text-transform: uppercase;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 @keyframes spin {
@@ -40,12 +31,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
-
-.loading-text {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #333;
-  text-align: center;
 }
