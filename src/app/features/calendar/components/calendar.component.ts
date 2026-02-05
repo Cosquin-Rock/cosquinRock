@@ -1,111 +1,97 @@
-import { Component, OnInit, OnDestroy, signal, Inject, PLATFORM_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarEventService } from '../services/calendar-event.service';
-import { FullCalendarEvent, CreateUpdateEventRequest } from '../models/calendar-event.interface';
+import { CalendarViewService } from '../../../services/calendar-view.service';
 import { isPlatformBrowser } from '@angular/common';
 import type { CalendarOptions } from '@fullcalendar/core';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
   imports: [CommonModule, FullCalendarModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.scss'
+  styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-  // Two calendars will be rendered side by side; we manage two option sets below
-
-  calendarOptionsLeft = signal<any>({
-    // Fix the view to a single day and lock navigation
-    initialView: 'timeGridDay',
-    initialDate: '2026-02-14',
-    headerToolbar: {
-      left: '',
-      center: '',
-      right: ''
-    },
-    timeZone: 'America/Argentina/Buenos_Aires',
-    weekends: true,
-    // Lock editing to prevent moving days, weeks, etc.
-    editable: false,
-    selectable: false,
-    events: [],
-    eventDisplay: 'block',
-    displayEventTime: true,
-    // Time grid specific options
-    allDaySlot: false,
-    slotMinTime: '15:00:00',
-    slotMaxTime: '26:00:00',
-    slotDuration: '00:30:00',
-    nowIndicator: true,
-    height: 'auto',
-  });
-
-  calendarOptionsRight = signal<any>({
-    initialView: 'timeGridDay',
-    initialDate: '2026-02-15',
-    headerToolbar: {
-      left: '',
-      center: '',
-      right: ''
-    },
-    timeZone: 'America/Argentina/Buenos_Aires',
-    weekends: true,
-    editable: false,
-    selectable: false,
-    events: [],
-    eventDisplay: 'block',
-    displayEventTime: true,
-    allDaySlot: false,
-    slotMinTime: '15:00:00',
-    slotMaxTime: '26:00:00',
-    slotDuration: '00:30:00',
-    nowIndicator: true,
-    height: 'auto',
-  });
-  isLoading = signal(false);
-  pluginsLoadedLeft = signal(false);
-  pluginsLoadedRight = signal(false);
+  currentDay: number = 14;
+  calendarOptions14: CalendarOptions = {} as CalendarOptions;
+  calendarOptions15: CalendarOptions = {} as CalendarOptions;
   private destroy$ = new Subject<void>();
+  pluginsReady14 = false;
+  pluginsReady15 = false;
 
   constructor(
     private calendarEventService: CalendarEventService,
+    private calendarViewService: CalendarViewService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    if (isPlatformBrowser(this.platformId)) {
-      // Left calendar plugins
-      import('@fullcalendar/daygrid').then(({ default: dayGridPlugin }) => {
-        import('@fullcalendar/timegrid').then(({ default: timeGridPlugin }) => {
-          import('@fullcalendar/interaction').then(({ default: interactionPlugin }) => {
-            const optionsLeft: any = { ...this.calendarOptionsLeft() };
-            optionsLeft.plugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
-            this.calendarOptionsLeft.set(optionsLeft);
-            this.pluginsLoadedLeft.set(true);
-          });
-        });
-      });
-
-      // Right calendar plugins
-      import('@fullcalendar/daygrid').then(({ default: dayGridPlugin }) => {
-        import('@fullcalendar/timegrid').then(({ default: timeGridPlugin }) => {
-          import('@fullcalendar/interaction').then(({ default: interactionPlugin }) => {
-            const optionsRight: any = { ...this.calendarOptionsRight() };
-            optionsRight.plugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
-            this.calendarOptionsRight.set(optionsRight);
-            this.pluginsLoadedRight.set(true);
-          });
-        });
-      });
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
+    // Initialize two calendar options with loaded plugins to avoid SSR issues
+    const plugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
+    this.calendarOptions14 = {
+      initialView: 'timeGridDay',
+      initialDate: '2026-02-14',
+      headerToolbar: { left: '', center: '', right: '' },
+      timeZone: 'America/Argentina/Buenos_Aires',
+      weekends: true,
+      editable: false,
+      selectable: false,
+      events: [],
+      eventDisplay: 'block',
+      displayEventTime: true,
+      slotMinTime: '14:00:00',
+      slotMaxTime: '27:00:00',
+      slotDuration: '00:30:00',
+      nowIndicator: true,
+      height: 'auto',
+      plugins,
+      eventContent: this.getEventContentLeft.bind(this)
+    } as CalendarOptions;
+
+    this.calendarOptions15 = {
+      initialView: 'timeGridDay',
+      initialDate: '2026-02-15',
+      headerToolbar: { left: '', center: '', right: '' },
+      timeZone: 'America/Argentina/Buenos_Aires',
+      weekends: true,
+      editable: false,
+      selectable: false,
+      events: [],
+      eventDisplay: 'block',
+      displayEventTime: true,
+      slotMinTime: '14:00:00',
+      slotMaxTime: '27:00:00',
+      slotDuration: '00:30:00',
+      nowIndicator: true,
+      height: 'auto',
+      plugins,
+      eventContent: this.getEventContentRight.bind(this)
+    } as CalendarOptions;
+
+    this.pluginsReady14 = true;
+    this.pluginsReady15 = true;
+    
+    // Solo cargar eventos en el navegador, no en el servidor (SSR)
     if (isPlatformBrowser(this.platformId)) {
       this.loadEvents();
+      
+      // Subscribe to Day toggle if service is available
+      if ((this as any).calendarViewService !== undefined) {
+        try {
+          (this.calendarViewService as any).currentDay$$?.subscribe((d: number) => {
+            this.currentDay = d;
+          });
+        } catch (e) {
+          // ignore if not available
+        }
+      }
     }
   }
 
@@ -114,98 +100,62 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /**
-   * Carga los eventos desde el servicio
-   */
   loadEvents(): void {
-    this.isLoading.set(true);
-    this.calendarEventService
-      .getEvents()
+    console.log('🔄 Cargando eventos desde el navegador...');
+    this.calendarEventService.getEvents()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (events) => {
-          const updatedLeft = { ...this.calendarOptionsLeft() };
-          updatedLeft.events = events;
-          this.calendarOptionsLeft.set(updatedLeft);
-          const updatedRight = { ...this.calendarOptionsRight() };
-          updatedRight.events = events;
-          this.calendarOptionsRight.set(updatedRight);
-          this.isLoading.set(false);
+          console.log('✅ Eventos cargados:', events);
+          const evs = events as any[];
+          (this.calendarOptions14 as any).events = evs;
+          (this.calendarOptions15 as any).events = evs;
         },
         error: (error) => {
-          console.error('Error cargando eventos:', error);
-          this.isLoading.set(false);
+          console.error('❌ Error al cargar eventos:', error);
         }
       });
   }
 
-  /**
-   * Maneja el click en un evento existente
-   */
-  handleEventClick(arg: any): void {
-    const event = arg.event;
-    const updatedTitle = prompt('Nuevo título del evento:', event.title);
-    if (updatedTitle && updatedTitle !== event.title) {
-      const updateRequest: CreateUpdateEventRequest = {
-        title: updatedTitle,
-        description: event.extendedProps?.['description'] as string | undefined,
-        startDate: event.start?.toISOString() || '',
-        endDate: event.end?.toISOString() || '',
-        color: event.backgroundColor,
-        allDay: event.allDay,
-        location: event.extendedProps?.['location'] as string | undefined,
-        attendees: event.extendedProps?.['attendees'] as string[] | undefined,
-        status: event.extendedProps?.['status'] as 'confirmed' | 'tentative' | 'cancelled' | undefined
-      };
+  getEventContentLeft(arg: any) {
+    const e = arg.event;
+    const container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.alignItems = 'flex-start';
+    container.style.textAlign = 'left';
+    container.style.width = '100%';
+    container.style.color = '#fff';
 
-      this.calendarEventService
-        .updateEvent(event.id, updateRequest)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: () => {
-            console.log('Evento actualizado');
-          },
-          error: (error) => {
-            console.error('Error actualizando evento:', error);
-            alert('Error al actualizar el evento');
-          }
-        });
-    }
+    const title = document.createElement('div');
+    title.textContent = e.title;
+    title.style.fontFamily = "'Psychedelic One', cursive";
+    title.style.fontSize = '0.7em';
+    title.style.fontWeight = 'bold';
+    title.style.marginBottom = '2px';
+    container.appendChild(title);
+
+    const location = document.createElement('div');
+    location.textContent = e.extendedProps?.location ?? '';
+    location.style.fontSize = '0.7em';
+    location.style.opacity = '0.95';
+    container.appendChild(location);
+
+    const band = document.createElement('div');
+    const firstAttendee = e.extendedProps?.attendees?.[0] ?? '';
+    band.textContent = firstAttendee;
+    band.style.fontSize = '0.7em';
+    band.style.opacity = '0.95';
+    container.appendChild(band);
+
+    const time = document.createElement('div');
+    time.textContent = arg.timeText ?? '';
+    time.style.fontSize = '0.7em';
+    time.style.fontFamily = 'inherit';
+    container.appendChild(time);
+
+    return { domNodes: [container] };
   }
 
-  /**
-   * Maneja la selección de un rango de fechas (crear nuevo evento)
-   */
-  handleDateSelect(arg: any): void {
-    const title = prompt('Nuevo Evento:');
-    if (title) {
-      const createRequest: CreateUpdateEventRequest = {
-        title: title,
-        startDate: arg.start.toISOString(),
-        endDate: arg.end.toISOString(),
-        allDay: arg.allDay,
-        color: '#3788d8'
-      };
-
-      this.calendarEventService
-        .createEvent(createRequest)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (newEvent) => {
-            console.log('Evento creado:', newEvent);
-          },
-          error: (error) => {
-            console.error('Error creando evento:', error);
-            alert('Error al crear el evento');
-          }
-        });
-    }
-  }
-
-  /**
-   * Refresca los eventos desde el servicio
-   */
-  refreshEvents(): void {
-    this.loadEvents();
-  }
+  getEventContentRight = this.getEventContentLeft;
 }

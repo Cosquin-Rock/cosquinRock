@@ -1,12 +1,8 @@
-<div class="calendar-container two-calendar-layout">
-  <div class="calendar-two" *ngIf="pluginsLoadedLeft() && pluginsLoadedRight()">
-    <div class="calendar-cell calendar-day14">
-      <div class="calendar-day-label">14</div>
-      <full-calendar [options]="calendarOptionsLeft()"></full-calendar>
-    </div>
-    <div class="calendar-cell calendar-day15">
-      <div class="calendar-day-label">15</div>
-      <full-calendar [options]="calendarOptionsRight()"></full-calendar>
-    </div>
-  </div>
+<div class="calendar-container" *ngIf="currentDay === 14" style="text-align: left; margin: 0 auto;">
+  <div class="calendar-day-label">14</div>
+  <full-calendar *ngIf="pluginsReady14" [options]="calendarOptions14"></full-calendar>
+</div>
+<div class="calendar-container" *ngIf="currentDay === 15" style="text-align: left; margin: 0 auto;">
+  <div class="calendar-day-label">15</div>
+  <full-calendar *ngIf="pluginsReady15" [options]="calendarOptions15"></full-calendar>
 </div>

@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Psychedelic+One&display=swap');
+
+:root {
+  --BASE_YELLOW: #ffd700;
+  --BASE_PURPLE: #8a2be2;
+  --BASE_BLUE: #1e90ff;
+  --BASE_PINK: #ff69b4;
+  --BASE_GREEN: #32cd32;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto;
+  background: linear-gradient(135deg, var(--BASE_YELLOW), var(--BASE_PURPLE) 25%, var(--BASE_BLUE) 50%, var(--BASE_PINK) 75%, var(--BASE_GREEN) 100%);
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Overlay SVGs for fractals/hongos/pattern (static) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/assets/svg/fractal.svg'), url('/assets/svg/mushroom.svg'), url('/assets/svg/pattern.svg');
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center center, left bottom, right top;
+  background-size: 40%, 40%, 60%;
+  opacity: 0.25;
+}
+
+.calendar-container, .dashboard-center { position: relative; z-index: 1; }
+/* Decorative overlays (fractal and mushroom) above the gradient bg */
+.decor-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.decor-overlay svg { position: absolute; width: 1200px; height: 1200px; opacity: 0.95; mix-blend-mode: screen; }

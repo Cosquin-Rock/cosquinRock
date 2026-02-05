@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="600" height="600" aria-label="mushroom">
+  <g fill="none" stroke="#fff" opacity="0.25">
+    <ellipse cx="100" cy="110" rx="60" ry="40" fill="#fff" fill-opacity=".08"/>
+  </g>
+  <circle cx="100" cy="80" r="40" fill="#fff" fill-opacity=".15"/>
+</svg>

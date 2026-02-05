@@ -55,11 +55,41 @@ export interface CreateUpdateEventRequest {
 }
 
 /**
+ * Interfaz para el formato raw de un band que viene del backend
+ * El id viene como número desde el backend
+ */
+export interface BandRaw {
+  id: number | string;
+  title: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+  color?: string;
+  allDay?: boolean;
+  location?: string;
+  attendees?: string[];
+  status?: 'confirmed' | 'tentative' | 'cancelled';
+  createdAt?: string;
+  updatedAt?: string;
+  selected?: boolean;
+}
+
+/**
+ * Respuesta del backend al obtener eventos por persona
+ * Estructura real: data contiene objetos con _id, person y bands[]
+ */
+export interface BandByPersonItem {
+  _id: string;
+  person: string;
+  bands: BandRaw[];
+}
+
+/**
  * Respuesta del backend al obtener eventos
  */
 export interface GetEventsResponse {
   success: boolean;
-  data: CalendarEventDB[];
+  data: BandByPersonItem[];
   message?: string;
   timestamp?: string;
 }

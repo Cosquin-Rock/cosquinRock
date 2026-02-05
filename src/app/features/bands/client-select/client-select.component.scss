@@ -1,0 +1,38 @@
+.bands-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 24px;
+  justify-content: center;
+}
+.band-pill {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.25);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.6);
+  cursor: pointer;
+  font-family: 'Psychedelic One', cursive;
+  font-size: 1rem;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+}
+.band-pill:hover {
+  transform: scale(1.03);
+}
+.band-pill.selected {
+  color: #ff0000;
+  border-color: #ff0000;
+  background: rgba(255,0,0,0.08);
+}
+.band-pill input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.band-pill.selected {
+  color: #ff0000;
+  border-color: #ff0000;
+  background: rgba(255,0,0,0.08);
+}

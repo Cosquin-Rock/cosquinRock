@@ -15,20 +15,48 @@ import {
   providedIn: 'root'
 })
 export class CalendarEventService {
-  private apiUrl = 'http://localhost:3001/api/events'; // Point to Mockoon running on port 3000
+  private apiUrl = 'http://localhost:3000/api/bandByPerson'; // Point to Mockoon running on port 3000
   private events$ = new BehaviorSubject<FullCalendarEvent[]>([]);
 
   constructor(private http: HttpClient) {}
 
   /**
    * Obtiene todos los eventos del backend y los convierte al formato de Full Calendar
+   * El backend devuelve un array de objetos con _id, person y bands[]
+   * Necesitamos extraer todos los eventos del array bands y aplanarlos
    */
   getEvents(): Observable<FullCalendarEvent[]> {
+    console.log('🌐 Realizando petición HTTP a:', this.apiUrl);
     return this.http.get<GetEventsResponse>(this.apiUrl).pipe(
-      map(response => response.data.map(event => this.convertDBToFullCalendar(event))),
-      tap(events => this.events$.next(events)),
+      tap(response => {
+        console.log('📦 Respuesta recibida del backend:', response);
+      }),
+      map(response => {
+        // Extraer todos los eventos del array bands de cada objeto en data
+        const allEvents: CalendarEventDB[] = [];
+        response.data.forEach(item => {
+          if (item.bands && Array.isArray(item.bands)) {
+            // Convertir cada band a CalendarEventDB, asegurando que id sea string
+            item.bands.forEach(band => {
+              allEvents.push({
+                ...band,
+                id: String(band.id) // Asegurar que id sea string
+              });
+            });
+          }
+        });
+        console.log('🎯 Eventos extraídos:', allEvents);
+        // Convertir cada evento al formato de Full Calendar
+        const fullCalendarEvents = allEvents.map(event => this.convertDBToFullCalendar(event));
+        console.log('📅 Eventos convertidos a FullCalendar:', fullCalendarEvents);
+        return fullCalendarEvents;
+      }),
+      tap(events => {
+        console.log('💾 Guardando eventos en BehaviorSubject:', events);
+        this.events$.next(events);
+      }),
       catchError(error => {
-        console.warn('Failed to fetch events from API, using mock events.', error);
+        console.error('Error fetching events', error);
         // Create two mock events for today: 14:00-15:00 and 14:30-15:00
         const today = new Date();
         const year = today.getFullYear();

@@ -1,0 +1,12 @@
+<div class="bands-container">
+  <label class="band-pill" *ngFor="let b of bands" [class.selected]="b.selected">
+    <input type="checkbox" [(ngModel)]="b.selected" (change)="onSelectionChange()" [attr.aria-label]="'select-band-' + b.title" />
+    <span class="band-title">{{ b.title }}</span>
+  </label>
+  </div>
+  <div class="person-input" style="text-align:center; margin: 12px 0 0 0;">
+    <input [(ngModel)]="personName" placeholder="Nombre de persona" />
+  </div>
+<div style="text-align:center; margin: 20px 0;">
+  <button class="btn-cta" (click)="continue()">Continue</button>
+</div>
