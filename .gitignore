@@ -11,6 +11,10 @@
 npm-debug.log
 yarn-error.log
 
+# Package managers
+# Usar Yarn exclusivamente, ignorar npm lock
+package-lock.json
+
 # IDEs and editors
 .idea/
 .project
