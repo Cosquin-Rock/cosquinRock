@@ -16,14 +16,16 @@
   font-size: 1rem;
   text-transform: uppercase;
   box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  transition: all 0.2s ease;
 }
+
 .band-pill:hover {
   transform: scale(1.03);
 }
+
 .band-pill.selected {
-  color: #ff0000;
-  border-color: #ff0000;
-  background: rgba(255,0,0,0.08);
+  /* Los estilos de color se aplican dinámicamente via ngStyle */
+  /* Los colores se sobrescriben con ngStyle cuando la banda tiene color */
 }
 .band-pill input[type="checkbox"] {
   position: absolute;
@@ -31,8 +33,23 @@
   width: 1px;
   height: 1px;
 }
-.band-pill.selected {
-  color: #ff0000;
-  border-color: #ff0000;
-  background: rgba(255,0,0,0.08);
+
+.continue-wrap {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.btn-continuar {
+  background: #fff;
+  color: #000;
+  border: 2px solid #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-continuar:hover {
+  filter: brightness(0.95);
 }

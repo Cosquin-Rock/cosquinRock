@@ -10,12 +10,13 @@
 
 html, body, #root {
   height: 100%;
+  background: #000;
 }
 
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto;
-  background: linear-gradient(135deg, var(--BASE_YELLOW), var(--BASE_PURPLE) 25%, var(--BASE_BLUE) 50%, var(--BASE_PINK) 75%, var(--BASE_GREEN) 100%);
+  background: #000;
   color: #fff;
   overflow-x: hidden;
   position: relative;
