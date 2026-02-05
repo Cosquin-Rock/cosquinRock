@@ -43,9 +43,12 @@
   background: #fff;
   color: #000;
   border: 2px solid #fff;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  font-family: 'Psychedelic One', cursive;
+  font-size: 1rem;
   font-weight: 700;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
 }
