@@ -140,7 +140,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     container.style.width = '100%';
     container.style.height = '100%';
     container.style.color = '#fff';
-    container.style.fontFamily = "'Psychedelic One', cursive";
+    container.style.fontFamily = "'Righteous', cursive";
     container.style.padding = '4px 6px';
     container.style.boxSizing = 'border-box';
 

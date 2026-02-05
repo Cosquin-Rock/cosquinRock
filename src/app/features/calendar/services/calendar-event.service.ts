@@ -10,13 +10,13 @@ import {
   EventOperationResponse,
   DeleteEventResponse
 } from '../models/calendar-event.interface';
-import { APP_CONFIG } from '../../../config/app.config';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarEventService {
-  private apiUrl = `${APP_CONFIG.baseUrl}/api/bandByPerson`;
+  private apiUrl = `${environment.baseUrl}/api/bandByPerson`;
   private events$ = new BehaviorSubject<FullCalendarEvent[]>([]);
 
   constructor(private http: HttpClient) {}

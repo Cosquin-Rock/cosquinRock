@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { APP_CONFIG } from '../../config/app.config';
+import { environment } from '../../../environments/environment';
 
 export interface Band {
   id: number;
@@ -30,7 +30,7 @@ export interface BandsResponse {
 
 @Injectable({ providedIn: 'root' })
 export class BandService {
-  private apiUrl = `${APP_CONFIG.baseUrl}/api/getBands`;
+  private apiUrl = `${environment.baseUrl}/api/getBands`;
   constructor(private http: HttpClient) {}
 
   getBands(): Observable<Band[]> {

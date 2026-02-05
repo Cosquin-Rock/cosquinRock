@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { APP_CONFIG } from '../../config/app.config';
+import { environment } from '../../../environments/environment';
 
 export interface BandPayload {
   id?: number;
@@ -16,7 +16,7 @@ export interface SaveBandsRequest {
 
 @Injectable({ providedIn: 'root' })
 export class BandSelectionService {
-  private url = `${APP_CONFIG.baseUrl}/api/bandByPerson`;
+  private url = `${environment.baseUrl}/api/bandByPerson`;
   constructor(private http: HttpClient) {}
 
   saveBands(payload: SaveBandsRequest): Observable<any> {
