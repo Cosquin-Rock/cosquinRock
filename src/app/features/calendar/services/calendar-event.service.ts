@@ -10,12 +10,13 @@ import {
   EventOperationResponse,
   DeleteEventResponse
 } from '../models/calendar-event.interface';
+import { APP_CONFIG } from '../../../config/app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarEventService {
-  private apiUrl = 'http://localhost:3000/api/bandByPerson'; // Point to Mockoon running on port 3000
+  private apiUrl = `${APP_CONFIG.baseUrl}/api/bandByPerson`;
   private events$ = new BehaviorSubject<FullCalendarEvent[]>([]);
 
   constructor(private http: HttpClient) {}
