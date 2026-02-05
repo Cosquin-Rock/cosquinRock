@@ -8,9 +8,11 @@ El archivo `netlify.toml` está configurado para desplegar la aplicación Angula
 
 ```toml
 [build]
-  command = "npm run build -- --configuration=production"
+  command = "yarn build --configuration=production"
   publish = "dist/cosquin-rock/browser"
 ```
+
+**Nota:** Este proyecto usa **Yarn** como gestor de paquetes. Netlify detecta automáticamente `yarn.lock` y usará Yarn en lugar de npm.
 
 ## 🚀 Cómo Desplegar
 
@@ -44,8 +46,8 @@ netlify deploy --prod
 ### Opción 3: Deploy con Drag & Drop
 
 ```bash
-# Build local
-npm run build -- --configuration=production
+# Build local con Yarn
+yarn build --configuration=production
 
 # Sube la carpeta dist/cosquin-rock/browser a Netlify
 # https://app.netlify.com/drop

@@ -1,8 +1,8 @@
 # Configuración de Netlify para CosquinRock Angular App
 
 [build]
-  # Comando de build para producción (incluye SSR si está configurado)
-  command = "npm run build -- --configuration=production"
+  # Comando de build para producción usando Yarn (SPA sin SSR/Prerender)
+  command = "yarn build --configuration=production"
   
   # Directorio de publicación (output del build de Angular)
   publish = "dist/cosquin-rock/browser"
@@ -10,7 +10,9 @@
   # Variables de entorno para el build
   [build.environment]
     NODE_VERSION = "18"
-    NPM_VERSION = "9"
+    YARN_VERSION = "1.22.19"
+    # Forzar uso de Yarn (Netlify detecta automáticamente yarn.lock, pero esto lo asegura)
+    NPM_FLAGS = "--prefer-offline --no-audit"
 
 # Redirecciones para Single Page Application (SPA)
 # Todas las rutas deben apuntar a index.html para que Angular Router funcione

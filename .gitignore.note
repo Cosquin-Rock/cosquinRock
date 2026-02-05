@@ -1,0 +1,40 @@
+# NOTA IMPORTANTE: Archivos de Lock detectados
+
+Se detectaron tanto `yarn.lock` como `package-lock.json` en el proyecto.
+
+## Recomendación
+
+Si usas **Yarn exclusivamente**, deberías:
+
+1. Eliminar `package-lock.json`:
+   ```bash
+   rm package-lock.json
+   ```
+
+2. Agregar `package-lock.json` al `.gitignore`:
+   ```
+   # En .gitignore
+   package-lock.json
+   ```
+
+3. Commit el cambio:
+   ```bash
+   git rm package-lock.json
+   git add .gitignore yarn.lock netlify.toml
+   git commit -m "Usar Yarn exclusivamente, eliminar package-lock.json"
+   ```
+
+## ¿Por qué?
+
+Tener ambos archivos de lock puede causar:
+- ❌ Conflictos de versiones de dependencias
+- ❌ Builds inconsistentes entre local y Netlify
+- ❌ Confusión sobre qué gestor de paquetes usar
+- ❌ Tamaño innecesario del repositorio
+
+## ¿Cuál usar?
+
+- **Yarn** (recomendado si ya lo usas): Mantén `yarn.lock`
+- **npm**: Mantén `package-lock.json` y elimina `yarn.lock`
+
+**Nunca tengas ambos archivos simultáneamente.**
