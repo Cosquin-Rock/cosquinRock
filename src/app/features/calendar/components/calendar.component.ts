@@ -26,6 +26,18 @@ export class CalendarComponent implements OnInit, OnDestroy {
   pluginsReady14 = false;
   pluginsReady15 = false;
 
+  /** Paleta de colores por escenario (referencia) */
+  locationColors: { location: string; color: string }[] = [
+    { location: 'sur', color: '#79D8B2' },
+    { location: 'montana', color: '#FF5D38' },
+    { location: 'Paraguay????', color: '#6E1F98' },
+    { location: 'La FKN Casita del maldito blues', color: '#FFBD42' },
+    { location: 'La plaza electronic stage', color: '#FFB8C1' },
+    { location: 'Sorpresa', color: '#F3F7A1' },
+    { location: 'Norte', color: '#690571' },
+    { location: 'Boomerang', color: '#3788d8' },
+  ];
+
   constructor(
     private calendarEventService: CalendarEventService,
     private calendarViewService: CalendarViewService,
@@ -125,36 +137,53 @@ export class CalendarComponent implements OnInit, OnDestroy {
     container.style.display = 'flex';
     container.style.flexDirection = 'column';
     container.style.alignItems = 'flex-start';
-    container.style.textAlign = 'left';
     container.style.width = '100%';
+    container.style.height = '100%';
     container.style.color = '#fff';
+    container.style.fontFamily = "'Psychedelic One', cursive";
+    container.style.padding = '4px 6px';
+    container.style.boxSizing = 'border-box';
+
+    const headerRow = document.createElement('div');
+    headerRow.style.display = 'flex';
+    headerRow.style.justifyContent = 'space-between';
+    headerRow.style.alignItems = 'flex-start';
+    headerRow.style.width = '100%';
+    headerRow.style.gap = '8px';
 
     const title = document.createElement('div');
     title.textContent = e.title;
-    title.style.fontFamily = "'Psychedelic One', cursive";
-    title.style.fontSize = '0.7em';
+    title.style.fontSize = '1.05em';
     title.style.fontWeight = 'bold';
-    title.style.marginBottom = '2px';
-    container.appendChild(title);
-
-    const location = document.createElement('div');
-    location.textContent = e.extendedProps?.location ?? '';
-    location.style.fontSize = '0.7em';
-    location.style.opacity = '0.95';
-    container.appendChild(location);
-
-    const band = document.createElement('div');
-    const firstAttendee = e.extendedProps?.attendees?.[0] ?? '';
-    band.textContent = firstAttendee;
-    band.style.fontSize = '0.7em';
-    band.style.opacity = '0.95';
-    container.appendChild(band);
+    title.style.textTransform = 'uppercase';
+    title.style.flex = '1';
+    title.style.minWidth = '0';
+    headerRow.appendChild(title);
 
     const time = document.createElement('div');
     time.textContent = arg.timeText ?? '';
-    time.style.fontSize = '0.7em';
-    time.style.fontFamily = 'inherit';
-    container.appendChild(time);
+    time.style.fontSize = '0.75em';
+    time.style.fontWeight = '400';
+    time.style.flexShrink = '0';
+    headerRow.appendChild(time);
+
+    container.appendChild(headerRow);
+
+    const location = document.createElement('div');
+    location.textContent = e.extendedProps?.location ?? '';
+    location.style.fontSize = '1em';
+    location.style.fontWeight = '600';
+    location.style.marginTop = '4px';
+    container.appendChild(location);
+
+    const firstAttendee = e.extendedProps?.attendees?.[0];
+    if (firstAttendee) {
+      const band = document.createElement('div');
+      band.textContent = firstAttendee;
+      band.style.fontSize = '0.9em';
+      band.style.marginTop = '2px';
+      container.appendChild(band);
+    }
 
     return { domNodes: [container] };
   }

@@ -1,15 +1,73 @@
+.calendar-wrapper {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
 .calendar-container {
   display: block;
   margin: 0 auto;
-  text-align: center;
+  max-width: 100%;
 }
-.calendar-day-label {
-  font-family: 'Psychedelic One', cursive;
-  font-size: clamp(48px, 8vw, 120px);
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0;
+}
+
+.calendar-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-legend__swatch {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.calendar-legend__label {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
   color: #fff;
-  text-align: center;
-  margin: 0 0 8px 0;
-  text-shadow: 0 0 8px rgba(255,255,255,.9), 0 0 20px rgba(0,0,0,.2);
+}
+
+.calendar-day-bar {
+  background: #383838;
+  padding: 16px 24px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.calendar-day-bar__label {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.calendar-day-bar__number {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .calendar-day-button {
@@ -40,4 +98,38 @@
 // Ocultar la fila "all-day" (por si acaso)
 ::ng-deep .fc-all-day {
   display: none !important;
+}
+
+// Eje de horas (columna izquierda) - estilo BOARDWALK ROCK
+::ng-deep .fc-timegrid-slot-label,
+::ng-deep .fc-timegrid-axis {
+  color: #fff !important;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem;
+}
+
+// Bloques de eventos (slots de bandas)
+::ng-deep .fc-event {
+  border-radius: 6px !important;
+  border: none !important;
+}
+
+::ng-deep .fc-event-main {
+  color: #fff !important;
+}
+
+// Fallback teal si el evento no trae color; el backgroundColor del evento se respeta desde el modelo
+::ng-deep .fc-event:not([style*="background"]) {
+  background: #7eb8c9 !important;
+}
+
+// Celdas de la grilla (slots vacíos) - fondo oscuro
+::ng-deep .fc-timegrid-slot,
+::ng-deep .fc-timegrid-col {
+  background: #1a1a1a;
+}
+
+::ng-deep .fc-scrollgrid-sync-table {
+  background: #1a1a1a;
 }

@@ -1,8 +1,22 @@
-<div class="calendar-container" *ngIf="currentDay === 14">
-  <div class="calendar-day-label">14</div>
-  <full-calendar *ngIf="pluginsReady14" [options]="calendarOptions14"></full-calendar>
-</div>
-<div class="calendar-container" *ngIf="currentDay === 15">
-  <div class="calendar-day-label">15</div>
-  <full-calendar *ngIf="pluginsReady15" [options]="calendarOptions15"></full-calendar>
+<div class="calendar-wrapper">
+  <div class="calendar-container" *ngIf="currentDay === 14">
+    <div class="calendar-day-bar">
+      <span class="calendar-day-bar__label">Cosquin rock</span>
+      <span class="calendar-day-bar__number">14</span>
+    </div>
+    <full-calendar *ngIf="pluginsReady14" [options]="calendarOptions14"></full-calendar>
+  </div>
+  <div class="calendar-container" *ngIf="currentDay === 15">
+    <div class="calendar-day-bar">
+      <span class="calendar-day-bar__label">Cosquin rock</span>
+      <span class="calendar-day-bar__number">15</span>
+    </div>
+    <full-calendar *ngIf="pluginsReady15" [options]="calendarOptions15"></full-calendar>
+  </div>
+  <div class="calendar-legend">
+    <div class="calendar-legend__item" *ngFor="let item of locationColors">
+      <span class="calendar-legend__swatch" [style.background]="item.color"></span>
+      <span class="calendar-legend__label">{{ item.location }}</span>
+    </div>
+  </div>
 </div>
