@@ -17,10 +17,16 @@
   text-transform: uppercase;
   box-shadow: 0 4px 14px rgba(0,0,0,.25);
   transition: all 0.2s ease;
+  outline: none; /* Eliminar outline azul del navegador */
+  -webkit-tap-highlight-color: transparent; /* Eliminar highlight en móviles */
 }
 
 .band-pill:hover {
   transform: scale(1.03);
+}
+
+.band-pill:focus {
+  outline: none; /* Asegurar que no aparezca el outline en focus */
 }
 
 .band-pill.selected {
@@ -32,6 +38,7 @@
   opacity: 0;
   width: 1px;
   height: 1px;
+  outline: none; /* Eliminar outline del checkbox oculto */
 }
 
 .continue-wrap {
@@ -51,8 +58,14 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
+  outline: none; /* Eliminar outline azul del navegador */
+  -webkit-tap-highlight-color: transparent; /* Eliminar highlight en móviles */
 }
 
 .btn-continuar:hover {
   filter: brightness(0.95);
+}
+
+.btn-continuar:focus {
+  outline: none; /* Asegurar que no aparezca el outline en focus */
 }
